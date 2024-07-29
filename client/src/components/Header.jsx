@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header className=" bg-gray-400 p-2 shadow-md">
-      <nav className=" flex items-center justify-between max-w-6xl mx-auto">
+      <nav className=" flex items-center justify-between max-w-sm sm:max-w-6xl mx-auto">
         <h1 className="text-sm font-medium sm:text-2xl flex flex-col sm:flex-row">
           <span>Horizen</span>
           <span className="text-gray-600">Estate</span>
@@ -26,8 +26,8 @@ const Header = () => {
           <li className="text-xl hidden sm:inline hover:underline">
             <Link to="/about">About</Link>
           </li>
-          <li className=" text-sm sm:text-xl sm:inline hover:underline">
-            <Link to="/signin">signin</Link>
+          <li className=" text-2xl sm:text-xl sm:inline hover:underline">
+            <Link to="/signup">signin</Link>
           </li>
         </ul>
       </nav>
