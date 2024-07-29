@@ -9,5 +9,6 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("data base connected successfully"))
   .catch((err) => console.log("somthing went wrong", err));
-app.use("/api", router);
+app.use(express.json());
+app.use("/api/auth", router);
 app.listen(PORT, () => console.log(`app is litening on port ${PORT}`));
