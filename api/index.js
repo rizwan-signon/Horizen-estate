@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import error from "./middlewares/error.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 import router from "./routes/userRoute.js";
@@ -12,3 +13,4 @@ mongoose
 app.use(express.json());
 app.use("/api/auth", router);
 app.listen(PORT, () => console.log(`app is litening on port ${PORT}`));
+app.use(error);
