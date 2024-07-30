@@ -6,6 +6,7 @@ import {
   signinFailure,
 } from "../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 const SignIn = () => {
   const [signinData, setSigninData] = useState({});
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const SignIn = () => {
   };
   return (
     <div className=" max-w-sm sm:max-w-lg mx-auto py-10 px-4 mt-20">
-      <h1 className="text-2xl sm:text-3xl text-center font-medium text-blue-700 sm:text-gray-500">
+      <h1 className="text-2xl sm:text-3xl text-center font-medium text-gray-500">
         Sign in
       </h1>
       <form
@@ -68,6 +69,7 @@ const SignIn = () => {
         >
           {loading ? "loading" : "sign in"}
         </button>
+        <OAuth />
 
         <div className="flex items-center space-x-3 mx-2">
           <p>Dont have an account</p>

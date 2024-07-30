@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [signupData, setSignupData] = useState({});
@@ -38,7 +39,9 @@ const SignUp = () => {
   };
   return (
     <div className=" max-w-sm sm:max-w-lg mx-auto py-10 px-4 mt-20">
-      <h1 className="text-2xl sm:text-2xl text-center font-medium">Register</h1>
+      <h1 className="text-2xl sm:text-2xl text-center font-medium text-gray-500">
+        Register
+      </h1>
       <form
         action="#"
         className="flex flex-col p-2 gap-4 mt-6"
@@ -71,7 +74,7 @@ const SignUp = () => {
         >
           {loading ? "loading" : "signup"}
         </button>
-
+        <OAuth />
         <div className="flex items-center space-x-3 mx-2">
           <p>already have an account?</p>
           <span className="underline decoration-slate-600 cursor-pointer underline-offset-4 text-blue-700 font-medium">
