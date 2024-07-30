@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
   return (
     <header className=" bg-gray-400 p-2 shadow-md">
       <nav className=" flex items-center justify-between max-w-sm sm:max-w-6xl mx-auto">
