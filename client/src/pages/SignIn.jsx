@@ -40,8 +40,8 @@ const SignIn = () => {
   };
   return (
     <div className=" max-w-sm sm:max-w-lg mx-auto py-10 px-4 mt-20">
-      <h1 className="text-3xl sm:text-4xl text-center font-medium text-blue-700 sm:text-gray-500">
-        sign in
+      <h1 className="text-2xl sm:text-3xl text-center font-medium text-blue-700 sm:text-gray-500">
+        Sign in
       </h1>
       <form
         action="#"
