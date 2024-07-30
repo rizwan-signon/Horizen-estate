@@ -38,3 +38,46 @@ export const signIn = async (req, res, next) => {
     next(error);
   }
 };
+//signin with google
+export async function signinWithGoogle(req, res, next) {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+      });
+      const { password: hashPassword, ...rest } = user._doc;
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24 * 3,
+        })
+        .json(rest);
+    } else {
+      const generatePass =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashPass = bcryptjs.hashSync(generatePass, 10);
+      const newUser = new User({
+        userName: req.body.name,
+        email: req.body.email,
+        password: hashPass,
+        profilePic: req.body.photo,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+      });
+      const { password: hashPassword, ...rest } = newUser._doc;
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24 * 3 * 1000,
+        })
+        .json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
