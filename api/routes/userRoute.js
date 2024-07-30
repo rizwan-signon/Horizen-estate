@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signUp, signIn, signinWithGoogle } from "../controllers/user.js";
+import { signUp, signIn, signinWithGoogle } from "../controllers/authRoutes.js";
 
 const router = Router();
 router.post("/signup", signUp);
