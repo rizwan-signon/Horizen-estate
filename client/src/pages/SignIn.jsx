@@ -24,14 +24,13 @@ const SignIn = () => {
       });
 
       const data = await response.json();
+      setLoading(false);
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
       } else {
         navigate("/");
       }
-      setLoading(false);
-      console.log(data);
     } catch (error) {
       setLoading(false);
       setError(error.message);

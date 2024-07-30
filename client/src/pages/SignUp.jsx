@@ -6,8 +6,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(signupData);
-  console.log(error);
   const handleChange = (e) => {
     e.preventDefault();
     setSignupData({ ...signupData, [e.target.id]: e.target.value });
@@ -31,7 +29,7 @@ const SignUp = () => {
       }
       setLoading(true);
       setLoading(false);
-      console.log(data);
+
       navigate("/signin");
     } catch (error) {
       setLoading(false);
