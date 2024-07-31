@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { signinSuccess, deleteUser } from "../redux/slices/userSlice";
+import { signinSuccess, deleteUser, signOut } from "../redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
@@ -63,6 +63,7 @@ const Profile = () => {
       console.log(error);
     }
   };
+  //delete user
   const handleDeleteUser = async () => {
     try {
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
@@ -72,6 +73,17 @@ const Profile = () => {
       console.log(data);
       dispatch(deleteUser(data));
       navigate("/signin");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //signout
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+      dispatch(signOut(data));
+      dispatch("/signin");
     } catch (error) {
       console.log(error);
     }
@@ -153,7 +165,10 @@ const Profile = () => {
           </button>
           <div className="flex items-center justify-between space-x-3 mx-2 text-red-700 font-bold cursor-pointer">
             <span onClick={handleDeleteUser}>Delete Account</span>
-            <span className="decoration-slate-600 underline-offset-4 text-red-700 font-bold cursor-pointer">
+            <span
+              onClick={handleSignOut}
+              className="decoration-slate-600 underline-offset-4 text-red-700 font-bold cursor-pointer"
+            >
               Signout
             </span>
           </div>
