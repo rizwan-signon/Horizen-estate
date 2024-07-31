@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { signinSuccess } from "../redux/slices/userSlice";
 import {
   getDownloadURL,
   getStorage,
@@ -9,13 +10,14 @@ import {
 import app from "../firebase";
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const [image, setImage] = useState(undefined);
   const [formData, setFormData] = useState({});
   const [imagePerc, setImagePerc] = useState(0);
-  const { currentUser } = useSelector((state) => state.user);
-  const [error, setError] = useState("");
+  const { currentUser, error } = useSelector((state) => state.user);
+  const [updated, setUpdated] = useState(false);
   const fileRef = useRef();
-  const handleFileUpload = useCallback((image) => {
+  const handleFileUpload = (image) => {
     const storage = getStorage(app);
     const imageName = new Date().getTime() + image.name;
     const storageRef = ref(storage, imageName);
@@ -28,7 +30,7 @@ const Profile = () => {
         setImagePerc(Math.round(progress));
       },
       (error) => {
-        setError(error);
+        console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
@@ -36,21 +38,47 @@ const Profile = () => {
         });
       }
     );
-  }, []);
+  };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  console.log(formData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      dispatch(signinSuccess(data));
+      setUpdated(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(formData);
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
     }
-  }, [image, handleFileUpload]);
+  }, [image]);
 
   return (
     <div>
-      <div className="max-w-sm sm:max-w-lg mx-auto py-10 px-4 mt-10">
+      <div className="max-w-sm sm:max-w-lg mx-auto py-10 px-4 mt-4">
         <h1 className="text-2xl sm:text-3xl text-center font-medium text-gray-500">
           Profile
         </h1>
-        <form action="#" className="flex flex-col p-2 gap-4 mt-6">
+        <form
+          onSubmit={handleSubmit}
+          action="#"
+          className="flex flex-col p-2 gap-4 mt-6"
+        >
           <input
             onChange={(e) => setImage(e.target.files[0])}
             ref={fileRef}
@@ -78,24 +106,32 @@ const Profile = () => {
             )}
           </p>
           <input
+            onChange={handleChange}
             type="text"
+            defaultValue={currentUser.userName}
             placeholder="userName..."
             id="userName"
             className="bg-gray-400 w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
           />
           <input
+            onChange={handleChange}
             type="text"
+            defaultValue={currentUser.email}
             placeholder="email..."
             id="email"
             className="bg-gray-400 w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
           />
           <input
-            type="text"
+            onChange={handleChange}
+            type="password"
             placeholder="password..."
             id="password"
             className="bg-gray-400 w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
           />
-          <button className="bg-gray-500 hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2">
+          <button
+            type="submit"
+            className="bg-gray-500 hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
+          >
             update
           </button>
           <button className="bg-blue-500 hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2">
@@ -107,6 +143,11 @@ const Profile = () => {
               Signout
             </span>
           </div>
+          {updated && (
+            <p className=" text-green-700 font-bold">
+              you update your profile successfully
+            </p>
+          )}
         </form>
       </div>
     </div>
