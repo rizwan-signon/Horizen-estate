@@ -29,8 +29,8 @@ export const signIn = async (req, res, next) => {
       expiresIn: "7d",
     });
     res
-      .cookie("access-Token", token, {
-        maxAge: 60 * 60 * 1 * 24 * 3,
+      .cookie("access_Token", token, {
+        maxAge: 60 * 60 * 24 * 3 * 1000,
         httpOnly: true,
       })
       .json(rest);
@@ -49,9 +49,9 @@ export async function signinWithGoogle(req, res, next) {
       });
       const { password: hashPassword, ...rest } = user._doc;
       res
-        .cookie("access_token", token, {
+        .cookie("access_Token", token, {
           httpOnly: true,
-          maxAge: 60 * 60 * 24 * 3,
+          maxAge: 60 * 60 * 24 * 3 * 1000,
         })
         .json(rest);
     } else {
@@ -71,7 +71,7 @@ export async function signinWithGoogle(req, res, next) {
       });
       const { password: hashPassword, ...rest } = newUser._doc;
       res
-        .cookie("access_token", token, {
+        .cookie("access_Token", token, {
           httpOnly: true,
           maxAge: 60 * 60 * 24 * 3 * 1000,
         })

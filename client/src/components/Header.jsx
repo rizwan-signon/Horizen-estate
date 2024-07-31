@@ -26,7 +26,7 @@ const Header = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="text-xl hidden sm:inline hover:underline">
-            <Link to="/about">About</Link>
+            <Link to="/signup">About</Link>
           </li>
           <li className=" text-2xl sm:text-xl sm:inline hover:underline">
             <Link to="/profile">

@@ -1,9 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import error from "./middlewares/error.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
-import router from "./routes/userRoute.js";
+import router from "./routes/authRoute.js";
+import userUpdate from "./routes/userUpdate.js";
 import mongoose from "mongoose";
 const app = express();
 mongoose
@@ -11,6 +13,8 @@ mongoose
   .then(() => console.log("data base connected successfully"))
   .catch((err) => console.log("somthing went wrong", err));
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/auth", router);
+app.use("/api/user", userUpdate);
 app.listen(PORT, () => console.log(`app is litening on port ${PORT}`));
 app.use(error);
