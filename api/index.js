@@ -5,7 +5,7 @@ import error from "./middlewares/error.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 import router from "./routes/authRoute.js";
-import userUpdate from "./routes/userUpdate.js";
+import userUpdate from "./routes/user.js";
 import mongoose from "mongoose";
 const app = express();
 mongoose

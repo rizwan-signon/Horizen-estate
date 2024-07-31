@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { signinSuccess } from "../redux/slices/userSlice";
+import { signinSuccess, deleteUser } from "../redux/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -11,6 +12,7 @@ import app from "../firebase";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [image, setImage] = useState(undefined);
   const [formData, setFormData] = useState({});
   const [imagePerc, setImagePerc] = useState(0);
@@ -61,7 +63,19 @@ const Profile = () => {
       console.log(error);
     }
   };
-  console.log(formData);
+  const handleDeleteUser = async () => {
+    try {
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      console.log(data);
+      dispatch(deleteUser(data));
+      navigate("/signin");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
@@ -138,7 +152,7 @@ const Profile = () => {
             create Listing
           </button>
           <div className="flex items-center justify-between space-x-3 mx-2 text-red-700 font-bold cursor-pointer">
-            <span>Delete Account</span>
+            <span onClick={handleDeleteUser}>Delete Account</span>
             <span className="decoration-slate-600 underline-offset-4 text-red-700 font-bold cursor-pointer">
               Signout
             </span>
