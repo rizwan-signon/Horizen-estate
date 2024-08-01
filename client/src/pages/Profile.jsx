@@ -59,6 +59,7 @@ const Profile = () => {
       const data = await response.json();
       dispatch(signinSuccess(data));
       setUpdated(true);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +84,7 @@ const Profile = () => {
       const res = await fetch(`/api/auth/signout`);
       const data = await res.json();
       dispatch(signOut(data));
-      dispatch("/signin");
+      navigate("/signin");
     } catch (error) {
       console.log(error);
     }
