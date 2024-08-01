@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { signinSuccess, deleteUser, signOut } from "../redux/slices/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -161,9 +161,12 @@ const Profile = () => {
           >
             update
           </button>
-          <button className="bg-blue-500 hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2">
+          <Link
+            to="/create_listing"
+            className="bg-blue-500 text-center hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
+          >
             create Listing
-          </button>
+          </Link>
           <div className="flex items-center justify-between space-x-3 mx-2 text-red-700 font-bold cursor-pointer">
             <span onClick={handleDeleteUser}>Delete Account</span>
             <span
