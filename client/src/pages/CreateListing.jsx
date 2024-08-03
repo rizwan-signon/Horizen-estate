@@ -16,7 +16,7 @@ const CreateListing = () => {
   const [loading, setLoading] = useState(false);
   console.log(currentUser);
   const [files, setFiles] = useState([]);
-  console.log(files);
+
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -102,7 +102,7 @@ const CreateListing = () => {
       if (formData.imageUrls.length < 0)
         return setError("you must upload at least one image ");
       setLoading(true);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch("/api/user/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

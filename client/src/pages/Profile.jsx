@@ -16,9 +16,11 @@ const Profile = () => {
   const [image, setImage] = useState(undefined);
   const [formData, setFormData] = useState({});
   const [imagePerc, setImagePerc] = useState(0);
+  const [showListing, setShowListings] = useState([]);
   const { currentUser, error } = useSelector((state) => state.user);
   const [updated, setUpdated] = useState(false);
   const fileRef = useRef();
+  console.log(showListing);
   const handleFileUpload = (image) => {
     const storage = getStorage(app);
     const imageName = new Date().getTime() + image.name;
@@ -60,6 +62,17 @@ const Profile = () => {
       dispatch(signinSuccess(data));
       setUpdated(true);
       navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //get listings data
+  const handleListings = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      setShowListings(data);
     } catch (error) {
       console.log(error);
     }
@@ -161,12 +174,21 @@ const Profile = () => {
           >
             update
           </button>
-          <Link
-            to="/create_listing"
-            className="bg-blue-500 text-center hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
-          >
-            create Listing
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/create_listing"
+              className="bg-blue-500 text-center hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
+            >
+              create Listing
+            </Link>
+            <Link
+              onClick={handleListings}
+              to="/create_listing"
+              className=" text-gray-200 bg-blue-500 text-center hover:opacity-90 uppercase font-medium w-full focus:overflow-hidden rounded-lg placeholder:text-gray-500 py-3 px-2"
+            >
+              show Listing
+            </Link>
+          </div>
           <div className="flex items-center justify-between space-x-3 mx-2 text-red-700 font-bold cursor-pointer">
             <span onClick={handleDeleteUser}>Delete Account</span>
             <span
@@ -182,6 +204,36 @@ const Profile = () => {
             </p>
           )}
         </form>
+        <div className="">
+          {showListing.length > 0 &&
+            showListing.map((listing) => (
+              <div
+                key={listing._id}
+                className="border rounded-lg p-2 my-2 flex items-center justify-between"
+              >
+                <Link to={`/listing/${listing._id}`}>
+                  <img
+                    src={listing.imageUrls[0]}
+                    alt="images"
+                    className="h-16 w-16 object-contain rounded-lg"
+                  />
+                </Link>
+                <Link to={`/listing/${listing._id}`}>
+                  <h1 className="text-xl font-medium hover:underline truncate">
+                    {listing.name}
+                  </h1>
+                </Link>
+                <div className="flex flex-col gap-4">
+                  <button className=" uppercase font-medium bg-red-700 px-3 py-1 rounded-lg">
+                    delete
+                  </button>
+                  <button className=" uppercase font-medium bg-gray-500 px-3 py-1 rounded-lg">
+                    edit
+                  </button>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
