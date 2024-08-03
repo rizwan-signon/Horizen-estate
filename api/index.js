@@ -17,6 +17,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", router);
 app.use("/api/user", userUpdate);
-app.use("/api/listing", listingRoute);
+app.use("/api/user", listingRoute);
 app.listen(PORT, () => console.log(`app is litening on port ${PORT}`));
 app.use(error);
