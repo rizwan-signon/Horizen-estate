@@ -32,3 +32,13 @@ export const deleteListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getListingById = async (req, res, next) => {
+  try {
+    const listing = await Listing.findById(req.params.listingId);
+    if (!listing) throw new Error("listing not found");
+    res.status(200).json(listing);
+  } catch (error) {
+    next(error);
+  }
+};
