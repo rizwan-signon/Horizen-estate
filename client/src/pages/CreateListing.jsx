@@ -277,12 +277,12 @@ const CreateListing = () => {
               multiple
               accept="image/*"
               id="image"
-              className="p-3 bg-transparent border border-gray-600 rounded-lg"
+              className="p-3 bg-transparent border border-gray-600 rounded-lg w-4/5"
             />
             <button
               type="button"
               onClick={handleImageSubmit}
-              className="p-3 rounded-lg border border-gray-500 text-blue-700 uppercase"
+              className="p-3 rounded-lg border border-gray-500 text-blue-700 uppercase "
             >
               Upload
             </button>

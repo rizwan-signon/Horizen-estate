@@ -6,7 +6,6 @@ export const verifyToken = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) throw new Error("there is some error while verifing token");
       req.user = user;
-      console.log(req.user);
       next();
     });
   } catch (error) {

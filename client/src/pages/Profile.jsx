@@ -43,7 +43,21 @@ const Profile = () => {
       }
     );
   };
-
+  //delete Listing
+  const handleDeleteListing = async (listingId) => {
+    try {
+      const res = await fetch(`/api/user/delete_listing/${listingId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      setShowListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
+      alert(data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -224,7 +238,10 @@ const Profile = () => {
                   </h1>
                 </Link>
                 <div className="flex flex-col gap-4">
-                  <button className=" uppercase font-medium bg-red-700 px-3 py-1 rounded-lg">
+                  <button
+                    onClick={() => handleDeleteListing(listing._id)}
+                    className=" uppercase font-medium bg-red-700 px-3 py-1 rounded-lg"
+                  >
                     delete
                   </button>
                   <button className=" uppercase font-medium bg-gray-500 px-3 py-1 rounded-lg">
