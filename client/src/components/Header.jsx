@@ -26,18 +26,25 @@ const Header = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="text-xl hidden sm:inline hover:underline">
-            <Link to="/signup">About</Link>
+            <Link to="/about">About</Link>
+          </li>
+          <li className="text-xl hidden sm:inline hover:underline">
+            <Link to="/signup">
+              <button className=" bg-blue-700 px-4 py-2 rounded-lg text-white">
+                Register
+              </button>
+            </Link>
           </li>
           <li className=" text-2xl sm:text-xl sm:inline hover:underline">
             <Link to="/profile">
               {currentUser ? (
-                <img
-                  className="w-8 h-8 rounded-full object-cover"
-                  src={currentUser.profilePic}
-                  alt="profilePic"
-                />
+                <h2 className=" uppercase font-medium text-2xl">
+                  {currentUser.userName}
+                </h2>
               ) : (
-                <h1>signin</h1>
+                <button className=" bg-green-700  px-3 py-2 rounded-lg text-white uppercase font-medium">
+                  Login
+                </button>
               )}
             </Link>
           </li>

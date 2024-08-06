@@ -33,11 +33,16 @@ const ListingDetails = () => {
     handleSubmit();
   }, []);
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="max-w-4xl mx-auto">
-        <Slider {...settings}>
+    <div className="max-w-full mt-3">
+      <div>
+        <Slider {...settings} className=" max-w-7xl mx-auto">
           {listingData.imageUrls?.map((image, index) => (
-            <img key={index} src={image} alt="not found" className="" />
+            <img
+              key={index}
+              src={image}
+              alt="not found"
+              className="w-full h-[450px] rounded-lg object-cover"
+            />
           ))}
         </Slider>
       </div>
